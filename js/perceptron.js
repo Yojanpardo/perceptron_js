@@ -21,7 +21,7 @@ function Perceptron(opts){
   }
 
   var lr = document.querySelector("#lr");
-  lr.innerHTML += learningrate;
+  lr.innerHTML = learningrate;
 
   var data = []
 
