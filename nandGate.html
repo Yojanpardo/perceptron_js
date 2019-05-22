@@ -8,7 +8,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <title>Compuerta OR</title>
+  <title>Compuerta NAND</title>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,11 +22,11 @@
         <li class="nav-item">
           <a class="nav-link" href="andGate.html">AND</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="orGate.html">OR</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="nandGate.html">NAND</a>
+          <a class="nav-link active" href="nandGate.html">NAND</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="norGate.html">NOR</a>
@@ -36,7 +36,7 @@
   </nav>
   <div class="container">
     <div class="row">
-      <h1 class="col-sm-12 my-4">Compuerta OR</h1>
+      <h1 class="col-sm-12 my-4">Compuerta NAND</h1>
       <div class="col-sm-12 col-md-6 col-lg-3">
         <table class="table table-striped" style="max-width: 50px">
           <thead class="text-center">
@@ -50,22 +50,22 @@
             <tr>
               <th>0</th>
               <th>0</th>
-              <th>0</th>
-            </tr>
-            <tr>
-              <th>0</th>
-              <th>1</th>
               <th>1</th>
             </tr>
             <tr>
-              <th>1</th>
               <th>0</th>
+              <th>1</th>
               <th>1</th>
             </tr>
             <tr>
               <th>1</th>
+              <th>0</th>
+              <th>1</th>
+            </tr>
+            <tr>
               <th>1</th>
               <th>1</th>
+              <th>0</th>
             </tr>
           </tbody>
         </table>
@@ -80,7 +80,7 @@
             <label for="x2">X2 </label>
             <input type="number" class="form-control" id="x2">
           </div>
-          <button class="btn btn-success my-2" id="orGate" type="submit">Comprobar</button>
+          <button class="btn btn-success my-2" id="nandGate" type="submit">Comprobar</button>
         </form>
         <div class="row ml-1">
           <h4 class="">Resultado: </h4>
@@ -90,7 +90,7 @@
       </div>
       <div class="table-responsive mt-5" id="table">
         <div id="retrain">
-          <button id="trainOrGate" class="btn btn-primary my-2">Entrenar compuerta OR</button>
+          <button id="trainNandGate" class="btn btn-primary my-2">Entrenar compuerta NAND</button>
         </div>
         <div id="lr"><label for="lr" class="mr-1">Learning Rate:</label></div>
         <table class="table table-striped">

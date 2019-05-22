@@ -14,34 +14,38 @@ function Perceptron(opts){
 
   var learningrate;
   if (!('learningrate' in opts)) {
-    learningrate = 0.1
+    learningrate = Math.random();
   }
   else {
     learningrate = opts.learningrate
   }
+
+  var lr = document.querySelector("#lr");
+  lr.innerHTML += learningrate;
 
   var data = []
 
   var api = {
     weights: weights,
     retrain: function() {
+      var rows = document.querySelector("#rows");
       var length = data.length
       var success = true
       for(var i=0; i<length; i++) {
         var training = data.shift()
         success = api.train(training.input, training.target) && success
-        console.log(weights)
       }
-      console.log(i)
+      rows.innerHTML += "<tr><td>" + weights[0]+ "</td><td>" + weights[1] + "</td><td>" + weights[2] + "</td></tr>"
       return success
     },
     train: function(inputs, expected) {
       while (weights.length < inputs.length) {
+        //add random weights
         weights.push(Math.random());
       }
       // add a bias weight for the threshold
       if (weights.length == inputs.length) {
-        weights.push('bias' in opts ? opts.bias : 1)
+        weights.push('bias' in opts ? opts.bias : 1);
       }
 
       var result = api.perceive(inputs)
@@ -59,9 +63,7 @@ function Perceptron(opts){
             ? threshold
             : inputs[i]
           api.adjust(result, expected, input, i)
-          console.log(result)
         }
-        if (debug) console.log(' -> weights:', weights)
         return false
       }
     },
@@ -106,7 +108,7 @@ function Perceptron(opts){
 }
 
 var print = function(msg) {
-  document.getElementById('output').innerHTML += msg + '<br/>';
+  document.getElementById('output').innerHTML = msg + '<br/>';
   console.log(msg);
 }
 
@@ -115,78 +117,116 @@ const andGate = document.querySelector('#andGate');
 const norGate = document.querySelector('#norGate');
 const nandGate = document.querySelector('#nandGate');
 
-orGate.addEventListener('click', function(){
-  let inputA = document.getElementById('inputA').value;
-  let inputB = document.getElementById('inputB').value;
-  let or = new Perceptron();
+try{
+const trainOrGate = document.querySelector('#trainOrGate'); 
+var or = new Perceptron();
 
+trainOrGate.addEventListener('click',function(){
+
+  var rt = document.querySelector("#retrain");
+  rt.innerHTML = "<a href='orGate.html' class='btn btn-warning my-2'>Reentrenar compuerta OR</a>"
   or.train([0, 0], 0);
   or.train([0, 1], 1);
   or.train([1, 0], 1);
   or.train([1, 1], 1);
 
   // practice makes perfect (we hope...)
-  let i = 0;
+  var i = 0;
   while(i++ < 10000 && !or.retrain()) {}
   console.log(i)
+})  
 
-  print('OR');
-  print(or.perceive([inputA, inputB]));
+orGate.addEventListener('click', function(){
+  var x1 = document.getElementById('x1').value;
+  var x2 = document.getElementById('x2').value;
+  print(or.perceive([x1, x2]));
+
 });
 
-andGate.addEventListener('click', function(){
-  let and = new Perceptron();
+}catch(error){
+  console.error("no orGate");
+}
 
-  and.train([0, 0], 0);
-  and.train([0, 1], 0);
-  and.train([1, 0], 0);
-  and.train([1, 1], 1);
+try{
+  const trainAndGate = document.querySelector('#trainAndGate');
+  var and = new Perceptron();
+  trainAndGate.addEventListener('click',function(){
 
-  // practice makes perfect (we hope...)
-  let i = 0;
-  while(i++ < 10000 && !and.retrain()) {}
+    var rt = document.querySelector("#retrain");
+    rt.innerHTML = "<a href='andGate.html' class='btn btn-warning my-2'>Reentrenar compuerta AND</a>"
+    and.train([0, 0], 0);
+    and.train([0, 1], 0);
+    and.train([1, 0], 0);
+    and.train([1, 1], 1);
 
-  print('AND');
-  print(and.perceive([0, 0]));
-  print(and.perceive([0, 1]));
-  print(and.perceive([1, 0]));
-  print(and.perceive([1, 1]));
-});
+    // practice makes perfect (we hope...)
+    var i = 0;
+    while(i++ < 10000 && !and.retrain()) {}
+    console.log(i)
+  })  
 
-norGate.addEventListener('click', function(){
-  let nor = new Perceptron();
+  andGate.addEventListener('click', function(){
+    var x1 = document.getElementById('x1').value;
+    var x2 = document.getElementById('x2').value;
+    print(and.perceive([x1, x2]));
 
-  nor.train([0, 0], 1);
-  nor.train([0, 1], 0);
-  nor.train([1, 0], 0);
-  nor.train([1, 1], 0);
+  });
+}catch(error){
+  console.error("no and gate")
+}
 
-  let i = 0;
-  while(i++ <10000 && !nor.retrain()) {}
+try{
+  const trainNorGate = document.querySelector('#trainNorGate');
+  var nor = new Perceptron();
+  trainNorGate.addEventListener('click',function(){
 
-  print('NOR');
+    var rt = document.querySelector("#retrain");
+    rt.innerHTML = "<a href='norGate.html' class='btn btn-warning my-2'>Reentrenar compuerta NOR</a>"
+    nor.train([0, 0], 1);
+    nor.train([0, 1], 0);
+    nor.train([1, 0], 0);
+    nor.train([1, 1], 0);
 
-  print(nor.perceive([0, 0]));
-  print(nor.perceive([0, 1]));
-  print(nor.perceive([1, 0]));
-  print(nor.perceive([1, 1]));
-});
+    // practice makes perfect (we hope...)
+    var i = 0;
+    while(i++ < 10000 && !nor.retrain()) {}
+    console.log(i)
+  });
 
-nandGate.addEventListener('click',function(){
-  let nand = new Perceptron();
+  norGate.addEventListener('click', function(){
+    var x1 = document.getElementById('x1').value;
+    var x2 = document.getElementById('x2').value;
+    print(nor.perceive([x1, x2]));
 
-  nand.train([0, 0], 1);
-  nand.train([0, 1], 1);
-  nand.train([1, 0], 1);
-  nand.train([1, 1], 0);
+  });
+}catch(error){
+  console.error("no nor gate")
+}
 
-  let i = 0;
-  while(i++ <10000 && !nand.retrain()) {}
+try{
+  const trainNandGate = document.querySelector('#trainNandGate');
+  var nand = new Perceptron();
+  trainNandGate.addEventListener('click',function(){
 
-  print('NAND');
+    var rt = document.querySelector("#retrain");
+    rt.innerHTML = "<a href='nandGate.html' class='btn btn-warning my-2'>Reentrenar compuerta NAND</a>"
+    nand.train([0, 0], 1);
+    nand.train([0, 1], 1);
+    nand.train([1, 0], 1);
+    nand.train([1, 1], 0);
 
-  print(nand.perceive([0, 1]));
-  print(nand.perceive([0, 1]));
-  print(nand.perceive([1, 0]));
-  print(nand.perceive([1, 1]));
-});
+    // practice makes perfect (we hope...)
+    var i = 0;
+    while(i++ < 10000 && !nand.retrain()) {}
+    console.log(i)
+  });
+
+  nandGate.addEventListener('click', function(){
+    var x1 = document.getElementById('x1').value;
+    var x2 = document.getElementById('x2').value;
+    print(nand.perceive([x1, x2]));
+
+  });
+}catch(error){
+  console.error("no nand gate")
+}
