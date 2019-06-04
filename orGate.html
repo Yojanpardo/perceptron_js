@@ -88,17 +88,26 @@
 
         </div>
       </div>
-      <div class="table-responsive mt-5" id="table">
-        <div id="retrain">
-          <button id="trainOrGate" class="btn btn-primary my-2">Entrenar compuerta OR</button>
-        </div>
-        <div><label for="lr" class="mr-1">Learning Rate:</label><span id="lr"></span></div>
+      <div id="retrain" class="col-sm-12">
+        <button id="trainOrGate" class="btn btn-primary my-2">Entrenar compuerta OR</button>
+      </div>
+      <div class="table-responsive" id="table">
         <table class="table table-striped">
           <thead>
             <tr>
-              <td>Peso 1</td>
-              <td>Peso 2</td>
+              <td>Iter</td>
+              <td>X1</td>
+              <td>X2</td>
+              <td>W1</td>
+              <td>W2</td>
               <td>Bias</td>
+              <td>D</td>
+              <td>Y</td>
+              <td>F(x)</td>
+              <td>η</td>
+              <td>δ</td>
+              <td>Δ1</td>
+              <td>Δ2</td>
             </tr>
           </thead>
           <tbody id="rows">

@@ -1,17 +1,24 @@
 function Perceptron(opts){
-  if (!opts)
+  //opts es un parámetro del perceptrón donde se van guardando
+  //todas las variables y métodos
+  if (!opts)//si el opts está vacio entonces se declara como un objeto abierto
     opts = {}
-
+  //si el debug está activado entonces en la consola aparecerá el paso a paso
   var debug = 'debug' in opts ? opts.debug : false;
-
-  var weights = 'weights' in opts
-    ? opts.weights.slice()
-    : []
-
+  //declaro la variable que contará las iteraciones más adeante  
+  var iter = 0
+  //si dentro del opts están declarados los pesos entonces se extraen para la variable de los pesos
+  // si no, los pesos se declara como un arreglo vacio
+  var weights = 'weights' in opts ? opts.weights.slice() : []
+  //Si los inputs stán delcaradon dentro del opts entonces se toman y se almacenan en la variable
+  //si no entonces se declara como un arreglo vacio
+  var inputs = 'inputs' in opts ? opts.inputs : []
+  //Si hay un valor limite en opts entonces lo deja como está y si o le asigna 1
+  //es usado para pasarlo por la función de activación y determinar se la neurona funciona
   var threshold = 'threshold' in opts
     ? opts.threshold
     : 1
-
+  //Asigna un valor para la el cosficiente de aprendizaje de forma automatica
   var learningrate;
   if (!('learningrate' in opts)) {
     learningrate = Math.random();
@@ -20,44 +27,49 @@ function Perceptron(opts){
     learningrate = opts.learningrate
   }
 
-  var lr = document.querySelector("#lr");
-  lr.innerHTML = learningrate;
-
   var data = []
 
+  //declaración de la api que contiene todas las variables y metodos que se
+  //utilizan en el "aprendizaje" la neurona
   var api = {
     weights: weights,
     retrain: function() {
-      var rows = document.querySelector("#rows");
       var length = data.length
       var success = true
       for(var i=0; i<length; i++) {
         var training = data.shift()
         success = api.train(training.input, training.target) && success
       }
-      rows.innerHTML += "<tr><td>" + weights[0]+ "</td><td>" + weights[1] + "</td><td>" + weights[2] + "</td></tr>"
       return success
     },
     train: function(inputs, expected) {
+      var rows = document.querySelector("#rows");
       while (weights.length < inputs.length) {
-        //add random weights
+        //pesos aleatorios
         weights.push(Math.random());
       }
-      // add a bias weight for the threshold
+      // agregar el peso del bias para el limite
       if (weights.length == inputs.length) {
         weights.push('bias' in opts ? opts.bias : 1);
       }
-
+      
       var result = api.perceive(inputs)
+      //envia a la data los parametros de entrenamiento
       data.push({input: inputs, target: expected, prev: result})
-
-      if (debug) console.log('> training %s, expecting: %s got: %s', inputs, expected, result)
-
+      
+      iter++
+      
+      let error = expected - result;
+      let Y = (inputs[0]*weights[0])+(inputs[1]*weights[1])-weights[2];
+      let delta = [(learningrate*error*inputs[0]),(learningrate*error*inputs[1])]
+      
+      rows.innerHTML += "<tr><td>" + iter + "</td><td>" + inputs[0] + "</td><td>" + inputs[1] + "</td><td>" + weights[0] + "</td><td>" + weights[1] + "</td><td>" + weights[2] + "</td><td>" + expected + "</td><td>" + Y + "</td><td>" + result + "</td><td>" + learningrate + "</td><td>" + error + "</td><td>" + delta[0] + "</td><td>" + delta[1] + "</td></tr>"
+      
       if (result == expected) {
         return true
       }
       else {
-        if (debug) console.log('> adjusting weights...', weights, inputs);
+        //if (debug) console.log('> ajunstando pesos...', weights, inputs);
         for(var i=0; i < weights.length; i++) {
           var input = (i == inputs.length)
             ? threshold
@@ -83,7 +95,6 @@ function Perceptron(opts){
       for(var i=0; i<inputs.length; i++) {
         result += inputs[i] * weights[i]
       }
-      
       result += threshold * weights[weights.length - 1];
 
       // Set the activation function to sigmoid, hardside, or a custom formula.
@@ -109,7 +120,6 @@ function Perceptron(opts){
 
 var print = function(msg) {
   document.getElementById('output').innerHTML = msg + '<br/>';
-  console.log(msg);
 }
 
 const orGate = document.querySelector('#orGate');
@@ -190,7 +200,6 @@ try{
     // practice makes perfect (we hope...)
     var i = 0;
     while(i++ < 10000 && !nor.retrain()) {}
-    console.log(i)
   });
 
   norGate.addEventListener('click', function(){
