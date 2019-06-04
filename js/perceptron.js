@@ -33,16 +33,16 @@ function Perceptron(opts){
   //utilizan en el "aprendizaje" la neurona
   var api = {
     weights: weights,
-    retrain: function() {
+    retrain: function(iter) {
       var length = data.length
       var success = true
       for(var i=0; i<length; i++) {
         var training = data.shift()
-        success = api.train(training.input, training.target) && success
+        success = api.train(training.input, training.target, iter) && success
       }
       return success
     },
-    train: function(inputs, expected) {
+    train: function(inputs, expected, iter) {
       var rows = document.querySelector("#rows");
       while (weights.length < inputs.length) {
         //pesos aleatorios
@@ -57,13 +57,14 @@ function Perceptron(opts){
       //envia a la data los parametros de entrenamiento
       data.push({input: inputs, target: expected, prev: result})
       
-      iter++
       
       let error = expected - result;
       let Y = (inputs[0]*weights[0])+(inputs[1]*weights[1])-weights[2];
       let delta = [(learningrate*error*inputs[0]),(learningrate*error*inputs[1])]
-      
-      rows.innerHTML += "<tr><td>" + iter + "</td><td>" + inputs[0] + "</td><td>" + inputs[1] + "</td><td>" + weights[0] + "</td><td>" + weights[1] + "</td><td>" + weights[2] + "</td><td>" + expected + "</td><td>" + Y + "</td><td>" + result + "</td><td>" + learningrate + "</td><td>" + error + "</td><td>" + delta[0] + "</td><td>" + delta[1] + "</td></tr>"
+      if (iter == undefined){
+        iter=0;
+      }
+      rows.innerHTML += "<tr><td>"+ iter + "</td><td>" + inputs[0] + "</td><td>" + inputs[1] + "</td><td>" + weights[0] + "</td><td>" + weights[1] + "</td><td>" + weights[2] + "</td><td>" + expected + "</td><td>" + Y + "</td><td>" + result + "</td><td>" + learningrate + "</td><td>" + error + "</td><td>" + delta[0] + "</td><td>" + delta[1] + "</td></tr>"
       
       if (result == expected) {
         return true
@@ -142,8 +143,8 @@ trainOrGate.addEventListener('click',function(){
 
   // practice makes perfect (we hope...)
   var i = 0;
-  while(i++ < 10000 && !or.retrain()) {}
-  console.log(i)
+  while(i++ < 10000 && !or.retrain(i)) {}
+  
 })  
 
 orGate.addEventListener('click', function(){
@@ -171,7 +172,7 @@ try{
 
     // practice makes perfect (we hope...)
     var i = 0;
-    while(i++ < 10000 && !and.retrain()) {}
+    while(i++ < 10000 && !and.retrain(i)) {}
     console.log(i)
   })  
 
@@ -199,7 +200,7 @@ try{
 
     // practice makes perfect (we hope...)
     var i = 0;
-    while(i++ < 10000 && !nor.retrain()) {}
+    while(i++ < 10000 && !nor.retrain(i)) {}
   });
 
   norGate.addEventListener('click', function(){
@@ -226,7 +227,7 @@ try{
 
     // practice makes perfect (we hope...)
     var i = 0;
-    while(i++ < 10000 && !nand.retrain()) {}
+    while(i++ < 10000 && !nand.retrain(i)) {}
     console.log(i)
   });
 
