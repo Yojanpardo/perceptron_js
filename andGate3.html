@@ -8,7 +8,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <title>Compuerta OR</title>
+  <title>Compuerta AND 3 entradas</title>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,7 +22,7 @@
         <li class="nav-item">
           <a class="nav-link" href="andGate.html">AND</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="orGate.html">OR</a>
         </li>
         <li class="nav-item">
@@ -31,7 +31,7 @@
         <li class="nav-item">
           <a class="nav-link" href="norGate.html">NOR</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="andGate3.html">AND 3</a>
         </li>
       </ul>
@@ -39,13 +39,14 @@
   </nav>
   <div class="container">
     <div class="row">
-      <h1 class="col-sm-12 my-4">Compuerta OR</h1>
+      <h1 class="col-sm-12 my-4">Compuerta AND</h1>
       <div class="col-sm-12 col-md-6 col-lg-3">
         <table class="table table-striped" style="max-width: 50px">
           <thead class="text-center">
             <tr>
               <th>X1</th>
               <th>X2</th>
+              <th>X3</th>
               <th>OUTPUT</th>
             </tr>
           </thead>
@@ -54,18 +55,46 @@
               <th>0</th>
               <th>0</th>
               <th>0</th>
+              <th>0</th>
+            </tr>
+            <tr>
+              <th>0</th>
+              <th>0</th>
+              <th>1</th>
+              <th>0</th>
+            </tr>
+            <tr>
+              <th>0</th>
+              <th>1</th>
+              <th>0</th>
+              <th>0</th>
             </tr>
             <tr>
               <th>0</th>
               <th>1</th>
               <th>1</th>
+              <th>0</th>
+            </tr>
+            <tr>
+              <th>1</th>
+              <th>0</th>
+              <th>0</th>
+              <th>0</th>
             </tr>
             <tr>
               <th>1</th>
               <th>0</th>
               <th>1</th>
+              <th>0</th>
             </tr>
             <tr>
+              <th>1</th>
+              <th>1</th>
+              <th>0</th>
+              <th>0</th>
+            </tr>
+            <tr>
+              <th>1</th>
               <th>1</th>
               <th>1</th>
               <th>1</th>
@@ -92,33 +121,39 @@
               <option value=1>1</option>
             </select>
           </div>
-          <button class="btn btn-success my-2" id="orGate" type="submit">Comprobar</button>
+          <div class="form-group">
+            <label for="x3">X3</label>
+            <select type="number" class="form-control" id="x3">
+              <option selected>Seleccionar...</option>
+              <option value=0>0</option>
+              <option value=1>1</option>
+            </select>
+          </div>
+          <button class="btn btn-success my-2" id="andGate3" >Comprobar</button>
         </form>
         <div class="row ml-1">
           <h4 class="">Resultado: </h4>
           <h4 id="output" class="ml-1"></h4>
+
         </div>
       </div>
-      <div id="retrain" class="col-sm-12">
-        <button id="trainOrGate" class="btn btn-primary my-2">Entrenar compuerta OR</button>
-      </div>
-      <div class="table-responsive" id="table">
+      <div class="table-responsive mt-5" id="table">
+        <div id="retrain">
+          <button id="trainAndGate3" class="btn btn-primary my-2">Entrenar compuerta AND</button>
+        </div>
         <table class="table table-striped">
           <thead>
             <tr>
               <td>Iter</td>
-              <td>X1</td>
-              <td>X2</td>
-              <td>W1</td>
-              <td>W2</td>
+              <td>X</td>
+              <td>Ws</td>
               <td>Bias</td>
               <td>D</td>
               <td>Y</td>
               <td>F(x)</td>
               <td>η</td>
               <td>δ</td>
-              <td>Δ1</td>
-              <td>Δ2</td>
+              <td>Δs</td>
             </tr>
           </thead>
           <tbody id="rows">

@@ -1,3 +1,4 @@
+
 function Perceptron(opts){
   //opts es un parámetro del perceptrón donde se van guardando
   //todas las variables y métodos
@@ -56,15 +57,26 @@ function Perceptron(opts){
       var result = api.perceive(inputs)
       //envia a la data los parametros de entrenamiento
       data.push({input: inputs, target: expected, prev: result})
-      
+      console.log(data)
       
       let error = expected - result;
-      let Y = (inputs[0]*weights[0])+(inputs[1]*weights[1])-weights[2];
-      let delta = [(learningrate*error*inputs[0]),(learningrate*error*inputs[1])]
+      let Y = 0;
+      
+      for (var i = 0; i < inputs.length; i++) {
+        Y += inputs[i]*weights[i]
+      }
+
+      Y -= weights.slice(-1);
+      let delta = []
+      for (var i = 0; i < inputs.length; i++) {
+        delta.push((learningrate*error*inputs[i]))
+      }
+      
       if (iter == undefined){
         iter=0;
       }
-      rows.innerHTML += "<tr><td>"+ iter + "</td><td>" + inputs[0] + "</td><td>" + inputs[1] + "</td><td>" + weights[0] + "</td><td>" + weights[1] + "</td><td>" + weights[2] + "</td><td>" + expected + "</td><td>" + Y + "</td><td>" + result + "</td><td>" + learningrate + "</td><td>" + error + "</td><td>" + delta[0] + "</td><td>" + delta[1] + "</td></tr>"
+
+      rows.innerHTML += "<tr><td>"+ iter + "</td><td>" + inputs + "</td><td>" + weights.slice(0,-1) + "</td><td>" + weights.slice(-1) + "</td><td>" + expected + "</td><td>" + Y + "</td><td>" + result + "</td><td>" + learningrate + "</td><td>" + error + "</td><td>" + delta + "</td></tr>"
       
       if (result == expected) {
         return true
@@ -77,8 +89,9 @@ function Perceptron(opts){
             : inputs[i]
           api.adjust(result, expected, input, i)
         }
-        return false
+        return false;
       }
+
     },
 
     adjust: function(result, expected, input, index) {
@@ -126,34 +139,33 @@ var print = function(msg) {
 const orGate = document.querySelector('#orGate');
 const andGate = document.querySelector('#andGate');
 const norGate = document.querySelector('#norGate');
+const andGate3 = document.querySelector('#andGate3');
 const nandGate = document.querySelector('#nandGate');
 
 try{
-const trainOrGate = document.querySelector('#trainOrGate'); 
-var or = new Perceptron();
+  const trainOrGate = document.querySelector('#trainOrGate'); 
+  var or = new Perceptron();
 
-trainOrGate.addEventListener('click',function(){
+  trainOrGate.addEventListener('click',function(){
 
-  var rt = document.querySelector("#retrain");
-  rt.innerHTML = "<a href='orGate.html' class='btn btn-warning my-2'>Reentrenar compuerta OR</a>"
-  or.train([0, 0], 0);
-  or.train([0, 1], 1);
-  or.train([1, 0], 1);
-  or.train([1, 1], 1);
+    var rt = document.querySelector("#retrain");
+    rt.innerHTML = "<a href='orGate.html' class='btn btn-warning my-2'>Reentrenar compuerta OR</a>"
+    or.train([0, 0], 0);
+    or.train([0, 1], 1);
+    or.train([1, 0], 1);
+    or.train([1, 1], 1);
 
-  // practice makes perfect (we hope...)
-  var i = 0;
-  while(i++ < 10000 && !or.retrain(i)) {}
-  
-})  
+    // practice makes perfect (we hope...)
+    var i = 0;
+    while(i++ < 10000 && !or.retrain(i)) {}
+    })  
 
-orGate.addEventListener('click', function(){
-  var x1 = document.getElementById('x1').value;
-  var x2 = document.getElementById('x2').value;
-  print(or.perceive([x1, x2]));
+    orGate.addEventListener('click', function(){
+    var x1 = document.getElementById('x1').value;
+    var x2 = document.getElementById('x2').value;
+    print(or.perceive([x1, x2]));
 
-});
-
+  });
 }catch(error){
   console.error("no orGate");
 }
@@ -239,4 +251,39 @@ try{
   });
 }catch(error){
   console.error("no nand gate")
+}
+
+try{
+  
+
+  const trainAndGate3 = document.querySelector('#trainAndGate3');
+  var and3 = new Perceptron();
+  trainAndGate3.addEventListener('click',function(){
+
+    var rt = document.querySelector("#retrain");
+    
+    rt.innerHTML = "<a href='andGate3.html' class='btn btn-warning my-2'>Reentrenar compuerta NAND</a>"
+    and3.train([0, 0, 0], 0);
+    and3.train([0, 0, 1], 0);
+    and3.train([0, 1, 0], 0);
+    and3.train([0, 1, 1], 0);
+    and3.train([1, 0, 0], 0);
+    and3.train([1, 0, 1], 0);
+    and3.train([1, 1, 0], 0);
+    and3.train([1, 1, 1], 1);
+
+    // practice makes perfect (we hope...)
+    var i = 0;
+    while(i++ < 10000 && !and3.retrain(i)) {}
+    console.log(i)
+  });
+
+  andGate3.addEventListener('click', function(){
+    var x1 = document.getElementById('x1').value;
+    var x2 = document.getElementById('x2').value;
+    var x3 = document.getElementById('x3').value;
+    print(and3.perceive([x1, x2, x3]));
+  });
+}catch(error){
+  console.error("no and gate for 3 inputs")
 }
