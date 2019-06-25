@@ -38,8 +38,11 @@ function Perceptron(opts){
       var length = data.length
       var success = true
       for(var i=0; i<length; i++) {
-        var training = data.shift()
+        var training = data[i]
         success = api.train(training.input, training.target, iter) && success
+        if(!success){
+          return success
+        }
       }
       return success
     },
@@ -55,9 +58,6 @@ function Perceptron(opts){
       }
       
       var result = api.perceive(inputs)
-      //envia a la data los parametros de entrenamiento
-      data.push({input: inputs, target: expected, prev: result})
-      console.log(data)
       
       let error = expected - result;
       let Y = 0;
@@ -92,6 +92,10 @@ function Perceptron(opts){
         return false;
       }
 
+    },
+
+    setData: function(inputs,target,expected){
+      data.push({input: inputs, target: target, prev: expected});
     },
 
     adjust: function(result, expected, input, index) {
@@ -150,10 +154,11 @@ try{
 
     var rt = document.querySelector("#retrain");
     rt.innerHTML = "<a href='orGate.html' class='btn btn-warning my-2'>Reentrenar compuerta OR</a>"
-    or.train([0, 0], 0);
-    or.train([0, 1], 1);
-    or.train([1, 0], 1);
-    or.train([1, 1], 1);
+    
+    or.setData([0, 0], 0, 0);
+    or.setData([0, 1], 1, 1);
+    or.setData([1, 0], 1, 1);
+    or.setData([1, 1], 1, 1);
 
     // practice makes perfect (we hope...)
     var i = 0;
@@ -177,10 +182,10 @@ try{
 
     var rt = document.querySelector("#retrain");
     rt.innerHTML = "<a href='andGate.html' class='btn btn-warning my-2'>Reentrenar compuerta AND</a>"
-    and.train([0, 0], 0);
-    and.train([0, 1], 0);
-    and.train([1, 0], 0);
-    and.train([1, 1], 1);
+    and.setData([0, 0], 0, 0);
+    and.setData([0, 1], 0, 0);
+    and.setData([1, 0], 0, 0);
+    and.setData([1, 1], 1, 1);
 
     // practice makes perfect (we hope...)
     var i = 0;
@@ -205,10 +210,10 @@ try{
 
     var rt = document.querySelector("#retrain");
     rt.innerHTML = "<a href='norGate.html' class='btn btn-warning my-2'>Reentrenar compuerta NOR</a>"
-    nor.train([0, 0], 1);
-    nor.train([0, 1], 0);
-    nor.train([1, 0], 0);
-    nor.train([1, 1], 0);
+    nor.setData([0, 0], 1, 1);
+    nor.setData([0, 1], 0, 0);
+    nor.setData([1, 0], 0, 0);
+    nor.setData([1, 1], 0, 0);
 
     // practice makes perfect (we hope...)
     var i = 0;
@@ -232,10 +237,10 @@ try{
 
     var rt = document.querySelector("#retrain");
     rt.innerHTML = "<a href='nandGate.html' class='btn btn-warning my-2'>Reentrenar compuerta NAND</a>"
-    nand.train([0, 0], 1);
-    nand.train([0, 1], 1);
-    nand.train([1, 0], 1);
-    nand.train([1, 1], 0);
+    nand.setData([0, 0], 1, 1);
+    nand.setData([0, 1], 1, 1);
+    nand.setData([1, 0], 1, 1);
+    nand.setData([1, 1], 0, 0);
 
     // practice makes perfect (we hope...)
     var i = 0;
@@ -254,23 +259,24 @@ try{
 }
 
 try{
-  
-
   const trainAndGate3 = document.querySelector('#trainAndGate3');
   var and3 = new Perceptron();
+
   trainAndGate3.addEventListener('click',function(){
 
     var rt = document.querySelector("#retrain");
     
     rt.innerHTML = "<a href='andGate3.html' class='btn btn-warning my-2'>Reentrenar compuerta NAND</a>"
-    and3.train([0, 0, 0], 0);
-    and3.train([0, 0, 1], 0);
-    and3.train([0, 1, 0], 0);
-    and3.train([0, 1, 1], 0);
-    and3.train([1, 0, 0], 0);
-    and3.train([1, 0, 1], 0);
-    and3.train([1, 1, 0], 0);
-    and3.train([1, 1, 1], 1);
+    
+
+    and3.setData([0, 0, 0], 0, 0);
+    and3.setData([0, 0, 1], 0, 0);
+    and3.setData([0, 1, 0], 0, 0);
+    and3.setData([0, 1, 1], 0, 0);
+    and3.setData([1, 0, 0], 0, 0);
+    and3.setData([1, 0, 1], 0, 0);
+    and3.setData([1, 1, 0], 0, 0);
+    and3.setData([1, 1, 1], 1, 1);
 
     // practice makes perfect (we hope...)
     var i = 0;

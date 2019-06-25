@@ -7,6 +7,7 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/my.css">
 
   <title>Compuerta OR</title>
 </head>
@@ -73,31 +74,32 @@
           </tbody>
         </table>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-6"><img src="img/red.gif" alt="" class="img img-responsive"></div>
-      <div class="col">
-        <form action="#" method="GET" class="col-sm-12 col-md-10 col-lg-8">
-          <div class="form-group">
-            <label for="x1">X1</label>
-            <select type="number" class="form-control" id="x1">
-              <option selected>Seleccionar...</option>
+      <div class="bg-perceptron">
+        <form action="#" method="GET" class="row">
+          <div class="col-sm-1"></div>
+          <div class="form-group col-sm-2" style="margin-left: 37px; margin-top: 54px">
+            <select type="number" id="x1" style="border: 0px;">
+              <option selected>X1</option>
               <option value=0>0</option>
               <option value=1>1</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="x2">X2 </label>
-            <select type="number" class="form-control" id="x2">
-              <option selected>Seleccionar...</option>
+          <div class="col-sm-9"></div>
+          <h4 id="output" class="col-sm-1 bg-white" style="margin-left:10px; margin-top:15px; border-radius: 50%">0</h4>
+          <div class="col-sm-1"></div>
+          <div class="col-sm-1"></div>
+          <div class="form-group col-sm-2" style="margin-top:28px; margin-left:37px;">
+            <select type="number" id="x2" style="border:0px;">
+              <option selected>X2</option>
               <option value=0>0</option>
               <option value=1>1</option>
             </select>
           </div>
-          <button class="btn btn-success my-2" id="orGate" type="submit">Comprobar</button>
+          <div class="col-sm-10"></div>
         </form>
-        <div class="row ml-1">
-          <h4 class="">Resultado: </h4>
-          <h4 id="output" class="ml-1"></h4>
-        </div>
+      </div>
+      <div class="col-sm-12">
+          <button class="btn btn-success" id="orGate" type="submit" style="margin-left:500px; margin-top:25px;">Comprobar</button>
       </div>
       <div id="retrain" class="col-sm-12">
         <button id="trainOrGate" class="btn btn-primary my-2">Entrenar compuerta OR</button>
@@ -107,18 +109,15 @@
           <thead>
             <tr>
               <td>Iter</td>
-              <td>X1</td>
-              <td>X2</td>
-              <td>W1</td>
-              <td>W2</td>
+              <td>Inputs</td>
+              <td>Ws</td>
               <td>Bias</td>
               <td>D</td>
               <td>Y</td>
               <td>F(x)</td>
               <td>η</td>
               <td>δ</td>
-              <td>Δ1</td>
-              <td>Δ2</td>
+              <td>Δs</td>
             </tr>
           </thead>
           <tbody id="rows">

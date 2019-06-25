@@ -7,7 +7,8 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  
+  <link rel="stylesheet" href="css/my.css">
   <title>Compuerta AND 3 entradas</title>
 </head>
 <body>
@@ -39,7 +40,7 @@
   </nav>
   <div class="container">
     <div class="row">
-      <h1 class="col-sm-12 my-4">Compuerta AND</h1>
+      <h1 class="col-sm-12 my-4">Compuerta AND 3 entradas</h1>
       <div class="col-sm-12 col-md-6 col-lg-3">
         <table class="table table-striped" style="max-width: 50px">
           <thead class="text-center">
@@ -102,40 +103,41 @@
           </tbody>
         </table>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-6"><img src="img/red.gif" alt="" class="img img-responsive"></div>
-      <div class="col">
-        <form action="#" method="GET" class="col-sm-12 col-md-10 col-lg-8">
-          <div class="form-group">
-            <label for="x1">X1</label>
-            <select type="number" class="form-control" id="x1">
-              <option selected>Seleccionar...</option>
+      <!--div class="col-sm-12 col-md-6 col-lg-6">
+        <img src="img/red.gif" alt="" class="img img-responsive">
+      </div-->
+      
+      <div style="background-image: url(img/perceptron.png); width:600px; height:350px">
+        <form action="#" method="GET" class="row">
+          <div class="form-group col-sm-2" style="margin-left: 85px; margin-top: 48px">
+            <select type="number" id="x1" style="border: 0px;">
+              <option selected>X1</option>
               <option value=0>0</option>
               <option value=1>1</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="x2">X2 </label>
-            <select type="number" class="form-control" id="x2">
-              <option selected>Seleccionar...</option>
+          <div class="col-sm-10"></div>
+          <div class="form-group col-sm-2" style="margin-top:40px; margin-left:85px;">
+            <select type="number" id="x2" style="border:0px;">
+              <option selected>X2</option>
               <option value=0>0</option>
               <option value=1>1</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="x3">X3</label>
-            <select type="number" class="form-control" id="x3">
-              <option selected>Seleccionar...</option>
+          <div class="col-sm-6"></div>
+          <h4 id="output" class="col-sm-1 bg-white" style="margin-left:13px; margin-top:35px; border-radius: 50%">Y</h4>
+          <div class="form-group col-sm-2" style="margin-top:43px; margin-left:85px;">
+            <select type="number" id="x3" style="border:0px;">
+              <option selected>X3</option>
               <option value=0>0</option>
               <option value=1>1</option>
             </select>
           </div>
-          <button class="btn btn-success my-2" id="andGate3" >Comprobar</button>
         </form>
-        <div class="row ml-1">
-          <h4 class="">Resultado: </h4>
-          <h4 id="output" class="ml-1"></h4>
-
-        </div>
+      </div>
+      <div class="col-sm-12">
+        <button class="btn btn-success" id="andGate3" type="submit" style="margin-left:500px; margin-top:25px;">Comprobar</button>
+      </div>
       </div>
       <div class="table-responsive mt-5" id="table">
         <div id="retrain">
